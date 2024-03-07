@@ -1,0 +1,41 @@
+using System;
+using System.Drawing;
+
+class Program
+{
+    static void Main()
+    {
+        try
+        {
+            // Load the input image
+            Bitmap inputImage = new Bitmap("input_image.jpg");
+
+            // Get the original width and height
+            int originalWidth = inputImage.Width;
+            int originalHeight = inputImage.Height;
+
+            // Calculate the new width and height
+            int newWidth = originalWidth * 3;
+            int newHeight = originalHeight * 3;
+
+            // Create a new Bitmap with the new dimensions
+            Bitmap tripledImage = new Bitmap(newWidth, newHeight);
+
+            // Draw the input image onto the new Bitmap, tripling its size
+            using (Graphics g = Graphics.FromImage(tripledImage))
+            {
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.DrawImage(inputImage, 0, 0, newWidth, newHeight);
+            }
+
+            // Save the tripled image to a file
+            tripledImage.Save("tripled_image.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+
+            Console.WriteLine("Image tripled successfully.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("An error occurred: " + ex.Message);
+        }
+    }
+}
